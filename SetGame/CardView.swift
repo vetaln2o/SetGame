@@ -59,7 +59,7 @@ class CardView: UIView {
     override func draw(_ rect: CGRect) {
         let roundRect = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.size.height*0.1)
         roundRect.addClip()
-        UIColor.gray.setFill()
+        UIColor.white.setFill()
         roundRect.fill()
         drawSymbols()
     }

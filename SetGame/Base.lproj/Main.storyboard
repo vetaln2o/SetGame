@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -10,41 +10,97 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Card Deck View Controller-->
+        <!--Set Game-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="CardDeckViewController" customModule="SetGame" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SetGame" customModule="SetGame" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A4d-PG-zqM" customClass="CardView" customModule="SetGame" customModuleProvider="target">
-                                <rect key="frame" x="53" y="68" width="271" height="423"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="symbol">
-                                        <integer key="value" value="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="number">
-                                        <integer key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="color">
-                                        <integer key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="fill">
-                                        <integer key="value" value="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck: 81" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T3D-eq-PLC">
+                                <rect key="frame" x="30" y="838" width="77" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scores: 0 / 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rm-NC-nMB">
+                                <rect key="frame" x="273" y="838" width="111" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s4v-TZ-QpN">
+                                <rect key="frame" x="147" y="791" width="120" height="42"/>
+                                <color key="backgroundColor" red="0.44347284441729468" green="0.56924175126903553" blue="0.047951873361538604" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="New Game">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gi5-a2-Qua"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="45t-a6-iud">
+                                <rect key="frame" x="294" y="791" width="120" height="42"/>
+                                <color key="backgroundColor" red="0.44347284440000001" green="0.56924175129999999" blue="0.047951873360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Deal 3+">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="dealMoreCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oK2-db-a98"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKh-QB-CTV">
+                                <rect key="frame" x="0.0" y="791" width="120" height="42"/>
+                                <color key="backgroundColor" red="0.44347284440000001" green="0.56924175129999999" blue="0.047951873360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Hint">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="showHint:" destination="BYZ-38-t0r" eventType="touchUpInside" id="G8p-d1-oXZ"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UlR-42-cXp" customClass="DeckView" customModule="SetGame" customModuleProvider="target">
+                                <rect key="frame" x="5" y="44" width="404" height="742"/>
+                                <color key="backgroundColor" red="0.62362515926361084" green="0.79901343584060669" blue="0.06854567676782608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.62180120292200591" green="0.79814403553299496" blue="0.067234178854279361" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="T3D-eq-PLC" secondAttribute="bottom" id="7Cs-JY-96l"/>
+                            <constraint firstItem="45t-a6-iud" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="s4v-TZ-QpN" secondAttribute="trailing" constant="10" id="BT5-E5-ygo"/>
+                            <constraint firstItem="45t-a6-iud" firstAttribute="width" secondItem="s4v-TZ-QpN" secondAttribute="width" id="GcR-Va-1gr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UlR-42-cXp" secondAttribute="trailing" constant="5" id="JXm-z6-su9"/>
+                            <constraint firstItem="1rm-NC-nMB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="T3D-eq-PLC" secondAttribute="trailing" constant="10" id="LMN-1B-UOX"/>
+                            <constraint firstItem="1rm-NC-nMB" firstAttribute="top" secondItem="45t-a6-iud" secondAttribute="bottom" constant="5" id="O6z-Yx-nB0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1rm-NC-nMB" secondAttribute="trailing" constant="30" id="PJ2-Ds-ftl"/>
+                            <constraint firstItem="UlR-42-cXp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="QPH-7q-q28"/>
+                            <constraint firstItem="1rm-NC-nMB" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ZEM-zv-bCL"/>
+                            <constraint firstItem="T3D-eq-PLC" firstAttribute="top" secondItem="s4v-TZ-QpN" secondAttribute="bottom" constant="5" id="b9h-pW-Z2x"/>
+                            <constraint firstItem="s4v-TZ-QpN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UKh-QB-CTV" secondAttribute="trailing" constant="10" id="egk-xW-G06"/>
+                            <constraint firstItem="T3D-eq-PLC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="fxL-hu-CHi"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="45t-a6-iud" secondAttribute="trailing" id="gNz-no-MK5"/>
+                            <constraint firstItem="UKh-QB-CTV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iMm-uI-wLH"/>
+                            <constraint firstItem="s4v-TZ-QpN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iqV-ws-hTF"/>
+                            <constraint firstItem="UlR-42-cXp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kzd-Fj-6GN"/>
+                            <constraint firstItem="UKh-QB-CTV" firstAttribute="width" secondItem="s4v-TZ-QpN" secondAttribute="width" id="mk5-2i-YcU"/>
+                            <constraint firstItem="T3D-eq-PLC" firstAttribute="top" secondItem="UKh-QB-CTV" secondAttribute="bottom" constant="5" id="uMQ-0R-N3f"/>
+                            <constraint firstItem="s4v-TZ-QpN" firstAttribute="top" secondItem="UlR-42-cXp" secondAttribute="bottom" constant="5" id="x9k-G8-6Wl"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="cardsDeck" destination="UlR-42-cXp" id="jjW-WV-O2f"/>
+                        <outlet property="deckLabel" destination="T3D-eq-PLC" id="gCa-8T-B6c"/>
+                        <outlet property="scoresLabel" destination="1rm-NC-nMB" id="DbF-CA-K8h"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="40.799999999999997" y="26.53673163418291"/>
+            <point key="canvasLocation" x="40.579710144927539" y="26.116071428571427"/>
         </scene>
     </scenes>
 </document>

@@ -8,24 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		91DD0D8721DE663700781BAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D8621DE663700781BAA /* AppDelegate.swift */; };
-		91DD0D8921DE663700781BAA /* CardDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D8821DE663700781BAA /* CardDeckViewController.swift */; };
+		91DD0D8921DE663700781BAA /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D8821DE663700781BAA /* SetGame.swift */; };
 		91DD0D8C21DE663700781BAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91DD0D8A21DE663700781BAA /* Main.storyboard */; };
 		91DD0D8E21DE663900781BAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91DD0D8D21DE663900781BAA /* Assets.xcassets */; };
 		91DD0D9121DE663900781BAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91DD0D8F21DE663900781BAA /* LaunchScreen.storyboard */; };
 		91DD0D9921DE7C5E00781BAA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D9821DE7C5E00781BAA /* Card.swift */; };
 		91DD0D9B21DE7FA200781BAA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D9A21DE7FA200781BAA /* CardView.swift */; };
+		91DD0D9D21DF971F00781BAA /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D9C21DF971F00781BAA /* DeckView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		91DD0D8321DE663700781BAA /* SetGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SetGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91DD0D8621DE663700781BAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		91DD0D8821DE663700781BAA /* CardDeckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeckViewController.swift; sourceTree = "<group>"; };
+		91DD0D8821DE663700781BAA /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		91DD0D8B21DE663700781BAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		91DD0D8D21DE663900781BAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91DD0D9021DE663900781BAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91DD0D9221DE663900781BAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91DD0D9821DE7C5E00781BAA /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		91DD0D9A21DE7FA200781BAA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		91DD0D9C21DF971F00781BAA /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +61,10 @@
 			isa = PBXGroup;
 			children = (
 				91DD0D8A21DE663700781BAA /* Main.storyboard */,
+				91DD0D8821DE663700781BAA /* SetGame.swift */,
+				91DD0D9C21DF971F00781BAA /* DeckView.swift */,
 				91DD0D9A21DE7FA200781BAA /* CardView.swift */,
 				91DD0D9821DE7C5E00781BAA /* Card.swift */,
-				91DD0D8821DE663700781BAA /* CardDeckViewController.swift */,
 				91DD0D8621DE663700781BAA /* AppDelegate.swift */,
 				91DD0D8D21DE663900781BAA /* Assets.xcassets */,
 				91DD0D8F21DE663900781BAA /* LaunchScreen.storyboard */,
@@ -141,8 +144,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91DD0D9D21DF971F00781BAA /* DeckView.swift in Sources */,
 				91DD0D9921DE7C5E00781BAA /* Card.swift in Sources */,
-				91DD0D8921DE663700781BAA /* CardDeckViewController.swift in Sources */,
+				91DD0D8921DE663700781BAA /* SetGame.swift in Sources */,
 				91DD0D9B21DE7FA200781BAA /* CardView.swift in Sources */,
 				91DD0D8721DE663700781BAA /* AppDelegate.swift in Sources */,
 			);
