@@ -15,6 +15,7 @@
 		91DD0D9921DE7C5E00781BAA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D9821DE7C5E00781BAA /* Card.swift */; };
 		91DD0D9B21DE7FA200781BAA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D9A21DE7FA200781BAA /* CardView.swift */; };
 		91DD0D9D21DF971F00781BAA /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D9C21DF971F00781BAA /* DeckView.swift */; };
+		91DD0D9F21E0F92200781BAA /* DeckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD0D9E21E0F92200781BAA /* DeckModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		91DD0D9821DE7C5E00781BAA /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		91DD0D9A21DE7FA200781BAA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		91DD0D9C21DF971F00781BAA /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		91DD0D9E21E0F92200781BAA /* DeckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				91DD0D9C21DF971F00781BAA /* DeckView.swift */,
 				91DD0D9A21DE7FA200781BAA /* CardView.swift */,
 				91DD0D9821DE7C5E00781BAA /* Card.swift */,
+				91DD0D9E21E0F92200781BAA /* DeckModel.swift */,
 				91DD0D8621DE663700781BAA /* AppDelegate.swift */,
 				91DD0D8D21DE663900781BAA /* Assets.xcassets */,
 				91DD0D8F21DE663900781BAA /* LaunchScreen.storyboard */,
@@ -148,6 +151,7 @@
 				91DD0D9921DE7C5E00781BAA /* Card.swift in Sources */,
 				91DD0D8921DE663700781BAA /* SetGame.swift in Sources */,
 				91DD0D9B21DE7FA200781BAA /* CardView.swift in Sources */,
+				91DD0D9F21E0F92200781BAA /* DeckModel.swift in Sources */,
 				91DD0D8721DE663700781BAA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

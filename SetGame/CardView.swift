@@ -56,11 +56,29 @@ class CardView: UIView {
     
     var card = Card(type: .diamond, number: 3, color: .red, fill: .striped)
     
+    init(card: Card, in rect: CGRect) {
+        super.init(frame: rect)
+        self.card = card
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func draw(_ rect: CGRect) {
         let roundRect = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.size.height*0.1)
         roundRect.addClip()
         UIColor.white.setFill()
         roundRect.fill()
+        switch card.cardState {
+        case .inSet:
+            UIColor.green.setStroke()
+            roundRect.stroke()
+        case .isSelected:
+            UIColor.blue.setStroke()
+            roundRect.stroke()
+        case .free: break
+        }
         drawSymbols()
     }
     

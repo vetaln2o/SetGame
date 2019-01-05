@@ -8,8 +8,61 @@
 
 import UIKit
 
+@IBDesignable
 class DeckView: UIView {
+    
+    var deck = Deck()
+    private var cellsCount = 12
+    private var cellsRects = [CGRect]()
+    
+    private func calculateCellsRects() -> [CGRect] {
+        var cells = [CGRect]()
+        let minimumCellWidth = (bounds.width*0.87) / 4
+        let minimumCellHeight = minimumCellWidth * 7 / 5
+        let cellSize = CGSize(width: minimumCellWidth, height: minimumCellHeight)
+        let columnsCount = 4
+        let rowsCount = Int(bounds.height / minimumCellHeight)
+        let dx = bounds.width * 0.13 / CGFloat(columnsCount)
+        for row in 0..<rowsCount {
+            for col in 0..<columnsCount {
+                let origin = CGPoint(x: dx*CGFloat(col)+CGFloat(col)*minimumCellWidth, y: CGFloat(row)*minimumCellHeight)
+                cells.append(CGRect(origin: origin, size: cellSize))
+            }
+        }
+        return cells
+    }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let cardsGrid = calculateCellsRects()
+        for (index,card) in deck.cardsList.enumerated() {
+            if index < cardsGrid.count {
+                let newCard = CardView(card: card, in: cardsGrid[index])
+                newCard.backgroundColor = .clear
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapCard(recognizedBy:)))
+                newCard.addGestureRecognizer(tapGesture)
+                self.addSubview(newCard)
+            } else {
+                break
+            }
+        }
+    }
+    
+    @objc func tapCard(recognizedBy recognizer: UITapGestureRecognizer) {
+//        switch recognizer.state {
+//        case .ended:
+//            if let cardView = recognizer.view as? CardView {
+//                deck.cardsList[self.subviews.index(of:cardView)!].cardState = .isSelected
+//                layoutSubviews()
+//            }
+//        default: break
+//        }
+    }
+    
+    @objc func choose(cardWith index: Int) {
+        deck.cardsList[index].cardState = .isSelected
+        print("Card was chosen!")
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
