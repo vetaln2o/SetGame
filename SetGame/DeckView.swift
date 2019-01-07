@@ -11,21 +11,30 @@ import UIKit
 @IBDesignable
 class DeckView: UIView {
     
-    var deck = Deck()
+    var deck = [Card]() {
+        didSet {
+            for subview in self.subviews {
+                subview.removeFromSuperview()
+            }
+            setNeedsLayout()
+        }
+    }
     private var cellsCount = 12
     private var cellsRects = [CGRect]()
+    
+    var lastSelectedCard: Card?
     
     private func calculateCellsRects() -> [CGRect] {
         var cells = [CGRect]()
         let minimumCellWidth = (bounds.width*0.87) / 4
-        let minimumCellHeight = minimumCellWidth * 7 / 5
+        let minimumCellHeight = minimumCellWidth * 6 / 5
         let cellSize = CGSize(width: minimumCellWidth, height: minimumCellHeight)
         let columnsCount = 4
         let rowsCount = Int(bounds.height / minimumCellHeight)
-        let dx = bounds.width * 0.13 / CGFloat(columnsCount)
+        let dxdy = bounds.width * 0.13 / CGFloat(columnsCount)
         for row in 0..<rowsCount {
             for col in 0..<columnsCount {
-                let origin = CGPoint(x: dx*CGFloat(col)+CGFloat(col)*minimumCellWidth, y: CGFloat(row)*minimumCellHeight)
+                let origin = CGPoint(x: dxdy*CGFloat(col)+CGFloat(col)*minimumCellWidth, y: dxdy*CGFloat(row)+CGFloat(row)*minimumCellHeight)
                 cells.append(CGRect(origin: origin, size: cellSize))
             }
         }
@@ -34,8 +43,11 @@ class DeckView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        for subview in self.subviews {
+            subview.removeFromSuperview()
+        }
         let cardsGrid = calculateCellsRects()
-        for (index,card) in deck.cardsList.enumerated() {
+        for (index,card) in deck.enumerated() {
             if index < cardsGrid.count {
                 let newCard = CardView(card: card, in: cardsGrid[index])
                 newCard.backgroundColor = .clear
@@ -48,27 +60,27 @@ class DeckView: UIView {
         }
     }
     
-    @objc func tapCard(recognizedBy recognizer: UITapGestureRecognizer) {
-//        switch recognizer.state {
-//        case .ended:
-//            if let cardView = recognizer.view as? CardView {
-//                deck.cardsList[self.subviews.index(of:cardView)!].cardState = .isSelected
-//                layoutSubviews()
-//            }
-//        default: break
-//        }
+    func updateViewFromModel() {
+        setNeedsLayout()
+        setNeedsDisplay()
     }
     
-    @objc func choose(cardWith index: Int) {
-        deck.cardsList[index].cardState = .isSelected
-        print("Card was chosen!")
+    @objc func tapCard(recognizedBy recognizer: UITapGestureRecognizer) {
+        switch recognizer.state {
+        case .ended:
+            if let cardView = recognizer.view as? CardView {
+                print(self.subviews.index(of:cardView)!)
+                deck[self.subviews.index(of:cardView)!].cardState = .isSelected
+                layoutSubviews()
+                lastSelectedCard = cardView.card
+                NotificationCenter.default.post(name: Notification.Name.CardWasSelect, object: self)
+            }
+        default: break
+        }
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
+}
+
+extension Notification.Name {
+    static let CardWasSelect = Notification.Name("CardWasSelect")
 }

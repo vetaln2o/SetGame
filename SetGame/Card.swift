@@ -45,6 +45,7 @@ class Card: Equatable {
     
     enum CardState {
         case free
+        case onBoard
         case isSelected
         case inSet
     }
