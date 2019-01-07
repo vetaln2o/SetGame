@@ -61,7 +61,26 @@ class SetGameModel {
     
     private func checkPossible(set: [Card]) -> Bool {
         var isSet = false
-        
+        if checkSameOfDifferentValues(between: set[0].number, set[1].number, set[2].number) &&
+            checkSameOfDifferentValues(between: set[0].color, set[1].color, set[2].color) &&
+            checkSameOfDifferentValues(between: set[0].type, set[1].type, set[2].type) &&
+            checkSameOfDifferentValues(between: set[0].fill, set[1].fill, set[2].fill) {
+            print("isSet")
+        } else {
+            print("isNotSet")
+        }
+        for selectedCard in selectedCards {
+            if let index = allCards.index(of: selectedCard) {
+                allCards[index].cardState = .inSet
+            }
+        }
+        selectedCards.removeAll()
         return isSet
     }
+    
+    private func checkSameOfDifferentValues<T: Comparable>(between element1: T, _ element2: T, _ element3: T) -> Bool {
+        return ((element1 == element2)&&(element2 == element3)) ||
+            ((element1 != element2)&&(element2 != element3)&&(element1 != element3))
+    }
+
 }

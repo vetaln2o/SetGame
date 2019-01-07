@@ -20,7 +20,11 @@ class Card: Equatable {
     var fill: Fill
     var cardState: CardState = .free
     
-    enum CardType {
+    enum CardType: Comparable {
+        static func < (lhs: Card.CardType, rhs: Card.CardType) -> Bool {
+            return lhs != rhs
+        }
+        
         case diamond
         case squiggle
         case oval
@@ -28,14 +32,22 @@ class Card: Equatable {
         static let allCardType : [CardType] = [.diamond, .squiggle, .oval]
     }
     
-    enum Color {
+    enum Color: Comparable {
+        static func < (lhs: Card.Color, rhs: Card.Color) -> Bool {
+            return lhs != rhs
+        }
+        
         case red
         case green
         case purple
         
         static let allColors : [Color] = [.red, .green, .purple]
     }
-    enum Fill {
+    enum Fill: Comparable {
+        static func < (lhs: Card.Fill, rhs: Card.Fill) -> Bool {
+            return lhs != rhs
+        }
+        
         case open
         case striped
         case solid

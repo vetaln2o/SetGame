@@ -72,11 +72,11 @@ class CardView: UIView {
         roundRect.fill()
         switch card.cardState {
         case .inSet:
-            roundRect.lineWidth = bounds.width / 20
+            roundRect.lineWidth = bounds.width / 10
             UIColor.green.setStroke()
             roundRect.stroke()
         case .isSelected:
-            roundRect.lineWidth = bounds.width / 20
+            roundRect.lineWidth = bounds.width / 10
             UIColor.blue.setStroke()
             roundRect.stroke()
         default: break
