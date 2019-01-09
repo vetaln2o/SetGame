@@ -16,6 +16,10 @@ class SetGameModel {
     var cardsInSet = [Card]()
     var selectedCards = [Card]()
     
+    var scores = 0
+    var tryingCount = 0
+    var gameStatus = "Game started!"
+    
     init() {
         self.cardsInSet = [Card]()
         self.selectedCards = [Card]()
@@ -37,6 +41,7 @@ class SetGameModel {
     private var dealPlace = 12
     
     func dealMoewCards() {
+        gameStatus = "3 new cards were dealt"
         let freeCards = allCards.filter { (card) -> Bool in
             return card.cardState == .free
         }
@@ -57,6 +62,7 @@ class SetGameModel {
             }
         }
         if selectedCards.count == 3 {
+            tryingCount += 1
             print("check set!")
             print(cardsInSet)
             print(selectedCards)
@@ -78,6 +84,8 @@ class SetGameModel {
                 }
             }
             cardsInSet += selectedCards
+            scores += 3
+            gameStatus = "SET was found!"
         } else {
             print("isNotSet")
             for selectedCard in selectedCards {
@@ -85,6 +93,8 @@ class SetGameModel {
                     allCards[index].cardState = .free
                 }
             }
+            scores -= 1
+            gameStatus = "No set was found :("
         }
 
         selectedCards.removeAll()

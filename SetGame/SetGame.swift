@@ -13,6 +13,8 @@ class SetGame: UIViewController {
     @IBOutlet weak var cardsDeck: DeckView!
     @IBOutlet weak var scoresLabel: UILabel!
     @IBOutlet weak var deckLabel: UILabel!
+    @IBOutlet weak var gameStatus: UILabel!
+    
     
     var game = SetGameModel()
     
@@ -28,9 +30,10 @@ class SetGame: UIViewController {
             forName: NSNotification.Name.CardWasSelect,
             object: cardsDeck,
             queue: OperationQueue.main,
-            using: { [weak self] (notification) in
-                self?.game.selectCard(card: (self?.cardsDeck.lastSelectedCard)!)
-                self?.cardsDeck.updateViewFromModel()
+            using: { [unowned self] (notification) in
+                self.game.selectCard(card: (self.cardsDeck.lastSelectedCard)!)
+                self.cardsDeck.updateViewFromModel()
+                self.updateLables()
         })
         
     }
@@ -38,12 +41,20 @@ class SetGame: UIViewController {
     @IBAction func newGame(_ sender: UIButton) {
         game = SetGameModel()
         cardsDeck.deck = game.cardsOnBoard
+        updateLables()
     }
     @IBAction func dealMoreCards(_ sender: UIButton) {
         game.dealMoewCards()
         cardsDeck.deck = game.cardsOnBoard
+        updateLables()
     }
     @IBAction func showHint(_ sender: UIButton) {
+    }
+    
+    private func updateLables() {
+        deckLabel.text = "Deck: \(game.allCards.count - game.cardsInSet.count)"
+        scoresLabel.text = "Scores: \(game.scores) / \(game.tryingCount)"
+        gameStatus.text = game.gameStatus
     }
     
 
