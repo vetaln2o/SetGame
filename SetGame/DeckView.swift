@@ -69,9 +69,6 @@ class DeckView: UIView {
         switch recognizer.state {
         case .ended:
             if let cardView = recognizer.view as? CardView {
-                print(self.subviews.index(of:cardView)!)
-                deck[self.subviews.index(of:cardView)!].cardState = .isSelected
-                layoutSubviews()
                 lastSelectedCard = cardView.card
                 NotificationCenter.default.post(name: Notification.Name.CardWasSelect, object: self)
             }

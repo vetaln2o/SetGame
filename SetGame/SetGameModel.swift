@@ -34,48 +34,60 @@ class SetGameModel {
         selectedCards = [Card]()
     }
     
+    private var dealPlace = 12
+    
     func dealMoewCards() {
         let freeCards = allCards.filter { (card) -> Bool in
             return card.cardState == .free
         }
-        print(freeCards.count)
         if !freeCards.isEmpty {
-            cardsOnBoard += freeCards[0...2]
+            cardsOnBoard += freeCards[dealPlace..<dealPlace+3]
+            dealPlace += 3
         }
-        print(cardsOnBoard.count)
     }
     
     func selectCard(card: Card) {
         if let cardIndex = allCards.index(of: card) {
-            allCards[cardIndex].cardState = .isSelected
-            selectedCards.append(allCards[cardIndex])
+            if !selectedCards.contains(allCards[cardIndex]) {
+                allCards[cardIndex].cardState = .isSelected
+                selectedCards.append(allCards[cardIndex])
+            } else {
+                allCards[cardIndex].cardState = .free
+                selectedCards.remove(at: selectedCards.index(of:card)!)
+            }
         }
         if selectedCards.count == 3 {
             print("check set!")
-            if checkPossible(set: selectedCards) {
-                cardsInSet += selectedCards
-                selectedCards.removeAll()
-            }
+            print(cardsInSet)
+            print(selectedCards)
+            checkPossible(set: selectedCards)
+            print(cardsInSet)
+            print(selectedCards)
         }
     }
     
-    private func checkPossible(set: [Card]) -> Bool {
-        var isSet = false
+    private func checkPossible(set: [Card]) {
         if checkSameOfDifferentValues(between: set[0].number, set[1].number, set[2].number) &&
             checkSameOfDifferentValues(between: set[0].color, set[1].color, set[2].color) &&
             checkSameOfDifferentValues(between: set[0].type, set[1].type, set[2].type) &&
             checkSameOfDifferentValues(between: set[0].fill, set[1].fill, set[2].fill) {
             print("isSet")
+            for selectedCard in selectedCards {
+                if let index = allCards.index(of: selectedCard) {
+                    allCards[index].cardState = .inSet
+                }
+            }
+            cardsInSet += selectedCards
         } else {
             print("isNotSet")
-        }
-        for selectedCard in selectedCards {
-            if let index = allCards.index(of: selectedCard) {
-                allCards[index].cardState = .inSet
+            for selectedCard in selectedCards {
+                if let index = allCards.index(of: selectedCard) {
+                    allCards[index].cardState = .free
+                }
             }
         }
+
         selectedCards.removeAll()
-        return isSet
     }
     
     private func checkSameOfDifferentValues<T: Comparable>(between element1: T, _ element2: T, _ element3: T) -> Bool {

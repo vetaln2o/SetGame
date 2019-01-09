@@ -29,7 +29,6 @@ class SetGame: UIViewController {
             object: cardsDeck,
             queue: OperationQueue.main,
             using: { [weak self] (notification) in
-                print("using observer")
                 self?.game.selectCard(card: (self?.cardsDeck.lastSelectedCard)!)
                 self?.cardsDeck.updateViewFromModel()
         })
