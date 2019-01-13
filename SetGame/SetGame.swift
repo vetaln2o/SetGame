@@ -32,7 +32,7 @@ class SetGame: UIViewController {
             queue: OperationQueue.main,
             using: { [unowned self] (notification) in
                 self.game.selectCard(card: (self.cardsDeck.lastSelectedCard)!)
-                self.cardsDeck.updateViewFromModel()
+                self.cardsDeck.deck = self.game.cardsOnBoard
                 self.updateLables()
         })
         

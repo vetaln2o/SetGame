@@ -33,21 +33,28 @@ class SetGameModel {
     
     func newGame() {
         allCards = Deck().cardsList
-        cardsOnBoard = [Card]()
         cardsInSet = [Card]()
         selectedCards = [Card]()
+        var visibleCards = [Card]()
+        for index in 0..<12 {
+            allCards[index].cardState = .onBoard
+            visibleCards.append(allCards[index])
+        }
+        self.cardsOnBoard = visibleCards
     }
     
-    private var dealPlace = 12
-    
     func dealMoewCards() {
-        gameStatus = "3 new cards were dealt"
-        let freeCards = allCards.filter { (card) -> Bool in
-            return card.cardState == .free
-        }
-        if !freeCards.isEmpty {
-            cardsOnBoard += freeCards[dealPlace..<dealPlace+3]
-            dealPlace += 3
+        let cardsOnBoardCount = cardsOnBoard.count
+        if cardsOnBoardCount < 24 {
+            gameStatus = "3 new cards were dealt"
+            let freeCards = allCards.filter { (card) -> Bool in
+                return card.cardState == .free
+            }
+            if !freeCards.isEmpty {
+                cardsOnBoard += freeCards[cardsOnBoardCount..<cardsOnBoardCount+3]
+            }
+        } else {
+            gameStatus = "The deck is full!"
         }
     }
     
@@ -63,12 +70,9 @@ class SetGameModel {
         }
         if selectedCards.count == 3 {
             tryingCount += 1
-            print("check set!")
-            print(cardsInSet)
-            print(selectedCards)
             checkPossible(set: selectedCards)
-            print(cardsInSet)
-            print(selectedCards)
+        } else {
+            gameStatus = "Choose more cards to find Set!"
         }
     }
     
@@ -86,6 +90,7 @@ class SetGameModel {
             cardsInSet += selectedCards
             scores += 3
             gameStatus = "SET was found!"
+            addNewCardInsteadOfSelected()
         } else {
             print("isNotSet")
             for selectedCard in selectedCards {
@@ -98,6 +103,26 @@ class SetGameModel {
         }
 
         selectedCards.removeAll()
+    }
+    
+    private func addNewCardInsteadOfSelected() {
+        if cardsOnBoard.count <= 12 {
+            let availableCards = allCards.filter { (card) -> Bool in
+                return card.cardState == .free
+            }
+            var availableCardsCounter = 0
+            for (index,card) in cardsOnBoard.enumerated() {
+                if selectedCards.contains(card) {
+                    cardsOnBoard[index] = availableCards[availableCardsCounter]
+                    availableCardsCounter += 1
+                    allCards[allCards.index(of: availableCards[availableCardsCounter])!].cardState = .onBoard
+                }
+            }
+        } else {
+            for selectedCard in selectedCards {
+                cardsOnBoard.remove(at: cardsOnBoard.index(of: selectedCard)!)
+            }
+        }
     }
     
     private func checkSameOfDifferentValues<T: Comparable>(between element1: T, _ element2: T, _ element3: T) -> Bool {
