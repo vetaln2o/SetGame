@@ -25,16 +25,21 @@ class DeckView: UIView {
     var lastSelectedCard: Card?
     
     private func calculateCellsRects() -> [CGRect] {
+        var maxRowCount = 6
+        var maxColumnCount = 4
+        if traitCollection.verticalSizeClass == .compact {
+            maxRowCount = 3
+            maxColumnCount = 8
+        }
         var cells = [CGRect]()
-        let minimumCellWidth = (bounds.width*0.87) / 4
+        let minimumCellWidth = (bounds.width*0.8) / CGFloat(maxColumnCount)
         let minimumCellHeight = minimumCellWidth * 6 / 5
         let cellSize = CGSize(width: minimumCellWidth, height: minimumCellHeight)
-        let columnsCount = 4
-        let rowsCount = Int(bounds.height / minimumCellHeight)
-        let dxdy = bounds.width * 0.13 / CGFloat(columnsCount)
-        for row in 0..<rowsCount {
-            for col in 0..<columnsCount {
-                let origin = CGPoint(x: dxdy*CGFloat(col)+CGFloat(col)*minimumCellWidth, y: dxdy*CGFloat(row)+CGFloat(row)*minimumCellHeight)
+        let dx = bounds.width * 0.2 / CGFloat(maxColumnCount)
+        let dy = bounds.width * 0.05 / CGFloat(maxRowCount)
+        for row in 0..<maxRowCount {
+            for col in 0..<maxColumnCount {
+                let origin = CGPoint(x: dx/2 + dx*CGFloat(col)+CGFloat(col)*minimumCellWidth, y: dy*CGFloat(row)+CGFloat(row)*minimumCellHeight)
                 cells.append(CGRect(origin: origin, size: cellSize))
             }
         }
