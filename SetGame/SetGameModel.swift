@@ -51,7 +51,11 @@ class SetGameModel {
                 return card.cardState == .free
             }
             if !freeCards.isEmpty {
-                cardsOnBoard += freeCards[cardsOnBoardCount..<cardsOnBoardCount+3]
+                let newCardsForDeck = freeCards[cardsOnBoardCount..<cardsOnBoardCount+3]
+                cardsOnBoard += newCardsForDeck
+                for card in newCardsForDeck {
+                    allCards[allCards.index(of: card)!].cardState = .onBoard
+                }
             }
         } else {
             gameStatus = "The deck is full!"
@@ -64,7 +68,7 @@ class SetGameModel {
                 allCards[cardIndex].cardState = .isSelected
                 selectedCards.append(allCards[cardIndex])
             } else {
-                allCards[cardIndex].cardState = .free
+                allCards[cardIndex].cardState = .onBoard
                 selectedCards.remove(at: selectedCards.index(of:card)!)
             }
         }
@@ -81,7 +85,6 @@ class SetGameModel {
             checkSameOfDifferentValues(between: set[0].color, set[1].color, set[2].color) &&
             checkSameOfDifferentValues(between: set[0].type, set[1].type, set[2].type) &&
             checkSameOfDifferentValues(between: set[0].fill, set[1].fill, set[2].fill) {
-            print("isSet")
             for selectedCard in selectedCards {
                 if let index = allCards.index(of: selectedCard) {
                     allCards[index].cardState = .inSet
@@ -92,10 +95,9 @@ class SetGameModel {
             gameStatus = "SET was found!"
             addNewCardInsteadOfSelected()
         } else {
-            print("isNotSet")
             for selectedCard in selectedCards {
                 if let index = allCards.index(of: selectedCard) {
-                    allCards[index].cardState = .free
+                    allCards[index].cardState = .onBoard
                 }
             }
             scores -= 1
