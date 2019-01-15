@@ -125,6 +125,7 @@
                     </view>
                     <connections>
                         <outlet property="cardsDeck" destination="UlR-42-cXp" id="jjW-WV-O2f"/>
+                        <outlet property="dealButton" destination="45t-a6-iud" id="sW6-kc-f7q"/>
                         <outlet property="deckLabel" destination="T3D-eq-PLC" id="gCa-8T-B6c"/>
                         <outlet property="gameStatus" destination="zwb-sb-sy1" id="bFp-gb-ccj"/>
                         <outlet property="scoresLabel" destination="1rm-NC-nMB" id="DbF-CA-K8h"/>

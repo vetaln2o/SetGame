@@ -19,22 +19,19 @@ class SetGameModel {
     var scores = 0
     var tryingCount = 0
     var gameStatus = "Game started!"
+
     
     init() {
-        self.cardsInSet = [Card]()
-        self.selectedCards = [Card]()
-        var visibleCards = [Card]()
-        for index in 0..<12 {
-            allCards[index].cardState = .onBoard
-            visibleCards.append(allCards[index])
-        }
-        self.cardsOnBoard = visibleCards
+        self.startGame()
     }
     
     func newGame() {
-        allCards = Deck().cardsList
-        cardsInSet = [Card]()
-        selectedCards = [Card]()
+        startGame()
+    }
+    
+    private func startGame() {
+        self.cardsInSet = [Card]()
+        self.selectedCards = [Card]()
         var visibleCards = [Card]()
         for index in 0..<12 {
             allCards[index].cardState = .onBoard
@@ -46,16 +43,18 @@ class SetGameModel {
     func dealMoewCards() {
         let cardsOnBoardCount = cardsOnBoard.count
         if cardsOnBoardCount < 24 {
-            gameStatus = "3 new cards were dealt"
             let freeCards = allCards.filter { (card) -> Bool in
                 return card.cardState == .free
             }
-            if !freeCards.isEmpty {
-                let newCardsForDeck = freeCards[cardsOnBoardCount..<cardsOnBoardCount+3]
+            if freeCards.count >= 3 {
+                gameStatus = "3 new cards were dealt"
+                let newCardsForDeck = freeCards[0..<3]
                 cardsOnBoard += newCardsForDeck
                 for card in newCardsForDeck {
                     allCards[allCards.index(of: card)!].cardState = .onBoard
                 }
+            } else {
+                gameStatus = "All cards are on deck!"
             }
         } else {
             gameStatus = "The deck is full!"
@@ -116,8 +115,8 @@ class SetGameModel {
             for (index,card) in cardsOnBoard.enumerated() {
                 if selectedCards.contains(card) {
                     cardsOnBoard[index] = availableCards[availableCardsCounter]
-                    availableCardsCounter += 1
                     allCards[allCards.index(of: availableCards[availableCardsCounter])!].cardState = .onBoard
+                    availableCardsCounter += 1
                 }
             }
         } else {

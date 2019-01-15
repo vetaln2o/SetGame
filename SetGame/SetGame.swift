@@ -14,6 +14,7 @@ class SetGame: UIViewController {
     @IBOutlet weak var scoresLabel: UILabel!
     @IBOutlet weak var deckLabel: UILabel!
     @IBOutlet weak var gameStatus: UILabel!
+    @IBOutlet weak var dealButton: UIButton!
     
     
     var game = SetGameModel()
@@ -34,6 +35,10 @@ class SetGame: UIViewController {
                 self.game.selectCard(card: (self.cardsDeck.lastSelectedCard)!)
                 self.cardsDeck.deck = self.game.cardsOnBoard
                 self.updateLables()
+                for card in self.game.cardsOnBoard {
+                    print("\(card.number) \(card.color) \(card.fill) \(card.type) \(card.cardState)")
+                }
+                print()
         })
         
     }
@@ -55,6 +60,12 @@ class SetGame: UIViewController {
         deckLabel.text = "Deck: \(game.allCards.count - game.cardsInSet.count)"
         scoresLabel.text = "Scores: \(game.scores) / \(game.tryingCount)"
         gameStatus.text = game.gameStatus
+        if game.cardsOnBoard.count == 24 {
+            dealButton.isEnabled = false
+        } else {
+            dealButton.isEnabled = true
+
+        }
     }
     
 
