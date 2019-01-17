@@ -80,10 +80,7 @@ class SetGameModel {
     }
     
     private func checkPossible(set: [Card]) {
-        if checkSameOfDifferentValues(between: set[0].number, set[1].number, set[2].number) &&
-            checkSameOfDifferentValues(between: set[0].color, set[1].color, set[2].color) &&
-            checkSameOfDifferentValues(between: set[0].type, set[1].type, set[2].type) &&
-            checkSameOfDifferentValues(between: set[0].fill, set[1].fill, set[2].fill) {
+        if checkSet(between: set) {
             for selectedCard in selectedCards {
                 if let index = allCards.index(of: selectedCard) {
                     allCards[index].cardState = .inSet
@@ -107,10 +104,10 @@ class SetGameModel {
     }
     
     private func addNewCardInsteadOfSelected() {
-        if cardsOnBoard.count <= 12 {
-            let availableCards = allCards.filter { (card) -> Bool in
-                return card.cardState == .free
-            }
+        let availableCards = allCards.filter { (card) -> Bool in
+            return card.cardState == .free
+        }
+        if cardsOnBoard.count <= 12 && !availableCards.isEmpty {
             var availableCardsCounter = 0
             for (index,card) in cardsOnBoard.enumerated() {
                 if selectedCards.contains(card) {
@@ -126,9 +123,60 @@ class SetGameModel {
         }
     }
     
+    private func checkSet(between cards:[Card]) -> Bool {
+        return checkSameOfDifferentValues(between: cards[0].number, cards[1].number, cards[2].number) &&
+            checkSameOfDifferentValues(between: cards[0].color, cards[1].color, cards[2].color) &&
+            checkSameOfDifferentValues(between: cards[0].type, cards[1].type, cards[2].type) &&
+            checkSameOfDifferentValues(between: cards[0].fill, cards[1].fill, cards[2].fill)
+    }
+    
     private func checkSameOfDifferentValues<T: Comparable>(between element1: T, _ element2: T, _ element3: T) -> Bool {
         return ((element1 == element2)&&(element2 == element3)) ||
             ((element1 != element2)&&(element2 != element3)&&(element1 != element3))
+    }
+    
+    func getPossibleSetCount(between cards:[Card]) -> Int {
+        var combinationsCount = 0
+        let cardCombinations = combinations(source: cards, takenBy: 3)
+        for combination in cardCombinations {
+            if checkSet(between: combination) {
+                combinationsCount += 1
+            }
+            for card in combination {
+                print("\(card.number)\(card.color)\(card.fill)\(card.type)")
+            }
+            print()
+        }
+        print(cardCombinations.count)
+        return combinationsCount
+    }
+    
+    func combinations<T>(source: [T], takenBy : Int) -> [[T]] {
+        if(source.count == takenBy) {
+            return [source]
+        }
+        
+        if(source.isEmpty) {
+            return []
+        }
+        
+        if(takenBy == 0) {
+            return []
+        }
+        
+        if(takenBy == 1) {
+            return source.map { [$0] }
+        }
+        
+        var result : [[T]] = []
+        
+        let rest = Array(source.suffix(from: 1))
+        let sub_combos = combinations(source: rest, takenBy: takenBy - 1)
+        result += sub_combos.map { [source[0]] + $0 }
+        
+        result += combinations(source: rest, takenBy: takenBy)
+        
+        return result
     }
 
 }

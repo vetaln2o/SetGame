@@ -54,6 +54,7 @@ class SetGame: UIViewController {
         updateLables()
     }
     @IBAction func showHint(_ sender: UIButton) {
+        gameStatus.text = "You have \(game.getPossibleSetCount(between: game.cardsOnBoard)) possible sets on board!"
     }
     
     private func updateLables() {
