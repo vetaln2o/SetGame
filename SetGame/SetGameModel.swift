@@ -19,6 +19,13 @@ class SetGameModel {
     var scores = 0
     var tryingCount = 0
     var gameStatus = "Game started!"
+    
+    var freeCards : [Card] {
+        let freeCards = allCards.filter { (card) -> Bool in
+            return card.cardState == .free
+        }
+        return freeCards
+    }
 
     
     init() {
@@ -43,9 +50,6 @@ class SetGameModel {
     func dealMoewCards() {
         let cardsOnBoardCount = cardsOnBoard.count
         if cardsOnBoardCount < 24 {
-            let freeCards = allCards.filter { (card) -> Bool in
-                return card.cardState == .free
-            }
             if freeCards.count >= 3 {
                 gameStatus = "3 new cards were dealt"
                 let newCardsForDeck = freeCards[0..<3]
@@ -74,6 +78,11 @@ class SetGameModel {
         if selectedCards.count == 3 {
             tryingCount += 1
             checkPossible(set: selectedCards)
+            if freeCards.isEmpty {
+                if getPossibleSetCount(between: cardsOnBoard) == 0 {
+                    NotificationCenter.default.post(name: .GameOver, object: self)
+                }
+            }
         } else {
             gameStatus = "Choose more cards to find Set!"
         }
@@ -104,15 +113,12 @@ class SetGameModel {
     }
     
     private func addNewCardInsteadOfSelected() {
-        let availableCards = allCards.filter { (card) -> Bool in
-            return card.cardState == .free
-        }
-        if cardsOnBoard.count <= 12 && !availableCards.isEmpty {
+        if cardsOnBoard.count <= 12 && !freeCards.isEmpty {
             var availableCardsCounter = 0
             for (index,card) in cardsOnBoard.enumerated() {
                 if selectedCards.contains(card) {
-                    cardsOnBoard[index] = availableCards[availableCardsCounter]
-                    allCards[allCards.index(of: availableCards[availableCardsCounter])!].cardState = .onBoard
+                    cardsOnBoard[index] = freeCards[availableCardsCounter]
+                    allCards[allCards.index(of: freeCards[availableCardsCounter])!].cardState = .onBoard
                     availableCardsCounter += 1
                 }
             }
@@ -141,13 +147,12 @@ class SetGameModel {
         for combination in cardCombinations {
             if checkSet(between: combination) {
                 combinationsCount += 1
+                for card in combination {
+                    print("\(card.number) \(card.fill) \(card.color) \(card.type) ")
+                }
+                print()
             }
-            for card in combination {
-                print("\(card.number)\(card.color)\(card.fill)\(card.type)")
-            }
-            print()
         }
-        print(cardCombinations.count)
         return combinationsCount
     }
     
@@ -155,15 +160,9 @@ class SetGameModel {
         if(source.count == takenBy) {
             return [source]
         }
-        
-        if(source.isEmpty) {
+        if(source.isEmpty) || (takenBy == 0) {
             return []
         }
-        
-        if(takenBy == 0) {
-            return []
-        }
-        
         if(takenBy == 1) {
             return source.map { [$0] }
         }
@@ -179,4 +178,8 @@ class SetGameModel {
         return result
     }
 
+}
+
+extension Notification.Name {
+    static let GameOver = Notification.Name("GameOver")
 }

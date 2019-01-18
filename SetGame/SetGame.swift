@@ -19,7 +19,7 @@ class SetGame: UIViewController {
     
     var game = SetGameModel()
     
-    var selectCardObserver: NSObjectProtocol?
+    var cardObserver: NSObjectProtocol?
     
 
     override func viewDidLoad() {
@@ -27,23 +27,31 @@ class SetGame: UIViewController {
         
         cardsDeck.deck = game.cardsOnBoard
         
-        selectCardObserver = NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.CardWasSelect,
+        cardObserver = NotificationCenter.default.addObserver(
+            forName: .CardWasSelect,
             object: cardsDeck,
             queue: OperationQueue.main,
             using: { [unowned self] (notification) in
                 self.game.selectCard(card: (self.cardsDeck.lastSelectedCard)!)
                 self.cardsDeck.deck = self.game.cardsOnBoard
                 self.updateLables()
-                for card in self.game.cardsOnBoard {
-                    print("\(card.number) \(card.color) \(card.fill) \(card.type) \(card.cardState)")
-                }
-                print()
+//                for card in self.game.cardsOnBoard {
+//                    print("\(card.number) \(card.color) \(card.fill) \(card.type) \(card.cardState)")
+//                }
+//                print()
+        })
+        
+        cardObserver = NotificationCenter.default.addObserver(
+            forName: .GameOver,
+            object: game,
+            queue: OperationQueue.main,
+            using: { (notification) in
+                self.showGameOverAlert()
         })
         
     }
 
-    @IBAction func newGame(_ sender: UIButton) {
+    @IBAction func newGame(_ sender: UIButton? = nil) {
         game = SetGameModel()
         cardsDeck.deck = game.cardsOnBoard
         updateLables()
@@ -54,7 +62,12 @@ class SetGame: UIViewController {
         updateLables()
     }
     @IBAction func showHint(_ sender: UIButton) {
-        gameStatus.text = "You have \(game.getPossibleSetCount(between: game.cardsOnBoard)) possible sets on board!"
+        let possibleSetCounts = game.getPossibleSetCount(between: game.cardsOnBoard)
+        if possibleSetCounts != 0 {
+            gameStatus.text = "You have \(possibleSetCounts) possible sets on board!"
+        } else if !game.freeCards.isEmpty {
+            gameStatus.text = "Deal more cards to find Set!"
+        }
     }
     
     private func updateLables() {
@@ -69,6 +82,14 @@ class SetGame: UIViewController {
         }
     }
     
+    private func showGameOverAlert() {
+        let alert = UIAlertController(title: "WIN!", message: "All sets were found. Your scores are \(game.scores) for \(game.tryingCount) attempts. \(game.cardsOnBoard.count) cards left.", preferredStyle: .alert)
+        let newGameAction = UIAlertAction(title: "New Game", style: .default) { (action) in
+            self.newGame()
+        }
+        alert.addAction(newGameAction)
+        self.present(alert, animated: true)
+    }
 
 }
 

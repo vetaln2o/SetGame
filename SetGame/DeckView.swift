@@ -75,7 +75,7 @@ class DeckView: UIView {
         case .ended:
             if let cardView = recognizer.view as? CardView {
                 lastSelectedCard = cardView.card
-                NotificationCenter.default.post(name: Notification.Name.CardWasSelect, object: self)
+                NotificationCenter.default.post(name: .CardWasSelect, object: self)
             }
         default: break
         }
